@@ -27,4 +27,37 @@ const getSubjectById = asyncHandler(async (req, res) => {
   }
 })
 
-export { createSubject, getSubjects, getSubjectById }
+const updateSubject = asyncHandler(async (req, res) => {
+  const subject = await Subject.findById(req.params.id)
+
+  if (subject) {
+    subject.name = name
+    subject.description = description
+
+    const updatedSubject = await subject.save()
+    res.json(updatedSubject)
+  } else {
+    res.status(404)
+    throw new Error("Subject not found")
+  }
+})
+
+const deleteSubject = asyncHandler(async (req, res) => {
+  const subject = await Subject.findById(req.params.id)
+
+  if (subject) {
+    await Subject.remove()
+    res.json({ message: "Subject removed" })
+  } else {
+    res.status(404)
+    throw new Error("Subject not found")
+  }
+})
+
+export {
+  createSubject,
+  getSubjects,
+  getSubjectById,
+  updateSubject,
+  deleteSubject,
+}

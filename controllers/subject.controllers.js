@@ -47,7 +47,7 @@ const deleteSubject = asyncHandler(async (req, res) => {
 
   if (subject) {
     await Subject.remove()
-    res.json({ message: "Subject removed" })
+    res.json({ message: "Subject removed successfully" })
   } else {
     res.status(404)
     throw new Error("Subject not found")

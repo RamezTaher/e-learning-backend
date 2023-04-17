@@ -11,4 +11,20 @@ const createSubject = expressAsyncHandler(async (req, res) => {
   res.status(201).json(createdSubject)
 })
 
-export { createSubject }
+const getSubjects = asyncHandler(async (req, res) => {
+  const subjects = await Subject.find()
+  res.json(subjects)
+})
+
+const getSubjectById = asyncHandler(async (req, res) => {
+  const subject = await Subject.findById(req.params.id)
+
+  if (subject) {
+    res.json(subject)
+  } else {
+    res.status(404)
+    throw new Error("Subject not found")
+  }
+})
+
+export { createSubject, getSubjects, getSubjectById }

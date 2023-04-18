@@ -46,4 +46,22 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   }
 })
 
-export { getUserProfile, updateUserProfile }
+const getUsers = asyncHandler(async (req, res) => {
+  const users = await User.find().select("-password")
+  res.json(users)
+})
+
+const getUserById = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id)
+    .select("-password")
+    .populate("courses")
+
+  if (user) {
+    res.json(user)
+  } else {
+    res.status(404)
+    throw new Error("User not found")
+  }
+})
+
+export { getUserProfile, updateUserProfile, getUsers, getUserById }

@@ -1,7 +1,7 @@
-import expressAsyncHandler from "express-async-handler"
+import asyncHandler from "express-async-handler"
 import Subject from "../models/subject.models.js"
 
-const createSubject = expressAsyncHandler(async (req, res) => {
+const createSubject = asyncHandler(async (req, res) => {
   const subject = new Subject({
     name: req.body.name,
     description: req.body.description,
@@ -31,11 +31,15 @@ const updateSubject = asyncHandler(async (req, res) => {
   const subject = await Subject.findById(req.params.id)
 
   if (subject) {
-    subject.name = name
-    subject.description = description
+    subject.name = req.body.name
+    subject.description = req.body.description
 
-    const updatedSubject = await subject.save()
-    res.json(updatedSubject)
+    await subject.save()
+    res.status(200).json({
+      message: "Subject Updated Successfully",
+      code: 200,
+      success: true,
+    })
   } else {
     res.status(404)
     throw new Error("Subject not found")
@@ -47,7 +51,11 @@ const deleteSubject = asyncHandler(async (req, res) => {
 
   if (subject) {
     await Subject.remove()
-    res.json({ message: "Subject removed successfully" })
+    res.json({
+      message: "Subject Removed successfully",
+      code: 200,
+      success: true,
+    })
   } else {
     res.status(404)
     throw new Error("Subject not found")

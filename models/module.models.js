@@ -9,7 +9,7 @@ const moduleSchema = mongoose.Schema(
     lessons: {
       type: [
         {
-          id: { type: number, unique: true },
+          id: { type: Number, unique: true },
           title: { type: String },
           content: { type: String },
           videoUrl: { type: String },

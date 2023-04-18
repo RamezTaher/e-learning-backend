@@ -10,6 +10,7 @@ import compression from "compression"
 // Import Routes
 import authRoutes from "./routes/auth.routes.js"
 import subjectRoutes from "./routes/subject.routes.js"
+import moduleRoutes from "./routes/module.routes.js"
 
 dotenv.config()
 connectDB()
@@ -32,6 +33,7 @@ app.use(compression())
 // Implement Endpoints
 app.use("/api/auth", authRoutes)
 app.use("/api/subject", subjectRoutes)
+app.use("/api/module", moduleRoutes)
 
 app.get("/", (req, res) => {
   res.send("Welcome to my E-Learning API")

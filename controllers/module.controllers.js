@@ -1,5 +1,5 @@
 import asyncHandler from "express-async-handler"
-import Module from "../models/module.models"
+import Module from "../models/module.models.js"
 
 const createModule = asyncHandler(async (req, res) => {
   const { title, lessons } = req.body

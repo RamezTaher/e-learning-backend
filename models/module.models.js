@@ -9,11 +9,16 @@ const moduleSchema = mongoose.Schema(
     lessons: {
       type: [
         {
-          id: { type: Number },
+          id: {
+            type: mongoose.Schema.Types.ObjectId,
+            auto: true,
+          },
+          _id: false,
           title: { type: String },
           content: { type: String },
           videoUrl: { type: String },
           duration: { type: Number },
+          order: { type: Number, required: true },
         },
       ],
       required: true,

@@ -36,7 +36,7 @@ const getModuleById = asyncHandler(async (req, res) => {
 
 const updateModuleName = asyncHandler(async (req, res) => {
   const { title } = req.body
-  const module = await Subject.findById(req.params.id)
+  const module = await Module.findById(req.params.id)
 
   if (module) {
     module.title = title
@@ -57,7 +57,8 @@ const deleteModule = asyncHandler(async (req, res) => {
   const module = await Module.findById(req.params.id)
 
   if (module) {
-    await module.remove()
+    await module.deleteOne()
+
     res.json({
       message: "Module Removed successfully",
       code: 200,
@@ -74,7 +75,7 @@ const deleteModuleLesson = asyncHandler(async (req, res) => {
 
   if (module) {
     module.lessons = module.lessons.filter(
-      (lesson) => lesson._id != req.params.lessonId
+      (lesson) => lesson.id != req.params.lessonId
     )
 
     await module.save()
@@ -90,16 +91,16 @@ const deleteModuleLesson = asyncHandler(async (req, res) => {
 })
 
 const addModuleLesson = asyncHandler(async (req, res) => {
-  const { title, content, videoUrl, duration } = req.body
+  const { title, content, videoUrl, duration, order } = req.body
   const module = await Module.findById(req.params.moduleId)
 
   if (module) {
     const newLesson = {
-      id,
       title,
       content,
       videoUrl,
       duration,
+      order,
     }
     await module.updateOne({ $push: { lessons: newLesson } })
 
@@ -107,7 +108,7 @@ const addModuleLesson = asyncHandler(async (req, res) => {
       message: "Lesson added successfully",
       code: 201,
       success: true,
-      module,
+      newLesson,
     })
   } else {
     res.status(404)

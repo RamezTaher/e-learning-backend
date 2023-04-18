@@ -50,7 +50,7 @@ const deleteSubject = asyncHandler(async (req, res) => {
   const subject = await Subject.findById(req.params.id)
 
   if (subject) {
-    await subject.remove()
+    await subject.deleteOne()
     res.json({
       message: "Subject Removed successfully",
       code: 200,

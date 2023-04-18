@@ -12,7 +12,10 @@ import {
 
 const router = express.Router()
 
-router.route("/").get(protect, getModules).post(protect, admin, createModule)
+router
+  .route("/")
+  .get(protect, admin, getModules)
+  .post(protect, admin, createModule)
 
 router
   .route("/:id")

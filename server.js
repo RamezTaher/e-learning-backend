@@ -12,6 +12,7 @@ import authRoutes from "./routes/auth.routes.js"
 import subjectRoutes from "./routes/subject.routes.js"
 import moduleRoutes from "./routes/module.routes.js"
 import userRoutes from "./routes/user.routes.js"
+import courseRoutes from "./routes/course.routes.js"
 
 dotenv.config()
 connectDB()
@@ -36,6 +37,7 @@ app.use("/api/auth", authRoutes)
 app.use("/api/subject", subjectRoutes)
 app.use("/api/module", moduleRoutes)
 app.use("/api/user", userRoutes)
+app.use("/api/course", courseRoutes)
 
 app.get("/", (req, res) => {
   res.send("Welcome to my E-Learning API")

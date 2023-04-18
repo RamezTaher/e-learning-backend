@@ -38,6 +38,12 @@ const userSchema = mongoose.Schema(
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Course",
+        progress: {
+          type: Number,
+          min: 0,
+          max: 0,
+          default: 0,
+        },
       },
     ],
     role: {
@@ -69,12 +75,12 @@ userSchema.pre("save", async function (next) {
   this.password = await bcrypt.hash(this.password, salt)
 })
 
-userSchema.pre('save', function(next) {
+userSchema.pre("save", function (next) {
   if (this.isAdmin) {
-    this.role = 'admin';
+    this.role = "admin"
   }
-  next();
-});
+  next()
+})
 
 const User = mongoose.model("User", userSchema)
 

@@ -1,29 +1,27 @@
-import mongoose from "mongoose";
+import mongoose from "mongoose"
 
-
-const progressSchema = mongoose.Schema({
+const progressSchema = mongoose.Schema(
+  {
     student: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Student'
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
     },
     course: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Course'
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Course",
     },
     progress: {
-        type: Number,
-        min: 0,
-        max: 0,
-        default: 0
-    }
-},
-    {
-        timestamps: true
-    }
+      type: Number,
+      min: 0,
+      max: 0,
+      default: 0,
+    },
+  },
+  {
+    timestamps: true,
+  }
 )
 
-
-
-const Progress = mongoose.model('Progress', progressSchema)
+const Progress = mongoose.model("Progress", progressSchema)
 
 export default Progress

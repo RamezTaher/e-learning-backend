@@ -1,6 +1,14 @@
 import express from "express"
 import { admin, protect } from "../middlewares/auth.middlewares.js"
-import { addModuleLesson, createModule, deleteModule, deleteModuleLesson, getModuleById, getModules, updateModuleName } from "../controllers/module.controllers.js"
+import {
+  addModuleLesson,
+  createModule,
+  deleteModule,
+  deleteModuleLesson,
+  getModuleById,
+  getModules,
+  updateModuleName,
+} from "../controllers/module.controllers.js"
 
 const router = express.Router()
 
@@ -16,6 +24,6 @@ router
   .route("/:moduleId/lesson/:lessonId")
   .delete(protect, admin, deleteModuleLesson)
 
-router.route("/:moduleId/lesson").post(protect, admin, addModuleLesson)
+router.route("/:moduleId/lesson").put(protect, admin, addModuleLesson)
 
 export default router

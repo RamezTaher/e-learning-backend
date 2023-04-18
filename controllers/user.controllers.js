@@ -123,14 +123,41 @@ const addCourseToUser = asyncHandler(async (req, res) => {
     throw new Error("Course already added to user")
   }
 
-  await User.updateOne(
-    { $push: { courses: courseId } },
-    { new: true }
-  ).populate("courses")
+  await User.updateOne({
+    $push: { courses: { _id: courseId, progress: 0 } },
+  })
 
   res.status(201).json({
     message: "Course added successfully",
     code: 201,
+    success: true,
+  })
+})
+
+const removeCourseFromUser = asyncHandler(async (req, res) => {
+  const { courseId } = req.body
+  const user = await User.findById(req.params.id)
+  const course = await Course.findById(courseId)
+
+  if (!user) {
+    res.status(404)
+    throw new Error("User Not Found")
+  }
+  if (!course) {
+    res.status(404)
+    throw new Error("Course Not Found")
+  }
+
+  if (!user.courses.includes(courseId)) {
+    res.status(404)
+    throw new Error("Course not found in user's courses")
+  }
+
+  await User.updateOne({ _id: req.params.id }, { $pull: { courses: courseId } })
+
+  res.status(200).json({
+    message: "Course removed successfully",
+    code: 200,
     success: true,
   })
 })
@@ -143,4 +170,5 @@ export {
   deleteUser,
   updateUser,
   addCourseToUser,
+  removeCourseFromUser,
 }

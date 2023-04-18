@@ -6,6 +6,7 @@ import {
   getUserById,
   getUserProfile,
   getUsers,
+  removeCourseFromUser,
   updateUser,
   updateUserProfile,
 } from "../controllers/user.controllers.js"
@@ -23,6 +24,10 @@ router
   .get(protect, admin, getUserById)
   .delete(protect, admin, deleteUser)
   .patch(protect, admin, updateUser)
+
+router
+  .route("/:id/course")
   .put(protect, admin, addCourseToUser)
+  .delete(protect, admin, removeCourseFromUser)
 
 export default router

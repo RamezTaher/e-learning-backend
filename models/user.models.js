@@ -42,7 +42,7 @@ const userSchema = mongoose.Schema(
     ],
     role: {
       type: String,
-      enum: ["student", "instructor"],
+      enum: ["student", "instructor", "admin"],
       default: "student",
     },
     isAdmin: {
@@ -68,6 +68,13 @@ userSchema.pre("save", async function (next) {
   const salt = await bcrypt.genSalt(10)
   this.password = await bcrypt.hash(this.password, salt)
 })
+
+userSchema.pre('save', function(next) {
+  if (this.isAdmin) {
+    this.role = 'admin';
+  }
+  next();
+});
 
 const User = mongoose.model("User", userSchema)
 

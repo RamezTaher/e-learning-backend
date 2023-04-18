@@ -85,17 +85,3 @@ userSchema.pre("save", function (next) {
 const User = mongoose.model("User", userSchema)
 
 export default User
-
-/*
-
-.populate({
-    path: 'courses',
-    populate: [
-      { path: 'instructor' },
-      { path: 'students' },
-      { path: 'modules' }
-    ]
-  });
-
-
-*/

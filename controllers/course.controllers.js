@@ -19,6 +19,10 @@ const getCourses = asyncHandler(async (req, res) => {
 
 const getCourseById = asyncHandler(async (req, res) => {
   const course = await Course.findById(req.params.id)
+    .populate("instructor", "firstName lastName username")
+    .populate("students", "firstName lastName username")
+    .populate("modules")
+    .populate("subject")
 
   if (course) {
     res.json(course)

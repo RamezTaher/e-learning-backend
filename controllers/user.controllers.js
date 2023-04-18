@@ -21,4 +21,29 @@ const getUserProfile = asyncHandler(async (req, res) => {
   }
 })
 
-export { getUserProfile }
+const updateUserProfile = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id)
+
+  if (user) {
+    user.firstName = req.body.firstName || user.firstName
+    user.lastName = req.body.lastName || user.lastName
+    user.email = req.body.email || user.email
+    user.username = req.body.username || user.username
+    if (req.body.password) {
+      user.password = req.body.password
+    }
+
+    await user.save()
+
+    res.json({
+      message: "User Profile Updated successfully",
+      code: 200,
+      success: true,
+    })
+  } else {
+    res.status(404)
+    throw new Error("User not found")
+  }
+})
+
+export { getUserProfile, updateUserProfile }

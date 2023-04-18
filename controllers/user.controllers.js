@@ -105,8 +105,8 @@ const updateUser = asyncHandler(async (req, res) => {
 })
 
 const addCourseToUser = asyncHandler(async (req, res) => {
-  const { courseId, userId } = req.body
-  const user = await User.findById(userId)
+  const { courseId } = req.body
+  const user = await User.findById(req.params.id)
   const course = await Course.findById(courseId)
 
   if (!user) {
@@ -142,4 +142,5 @@ export {
   getUserById,
   deleteUser,
   updateUser,
+  addCourseToUser,
 }

@@ -1,6 +1,7 @@
 import express from "express"
 import { protect, admin } from "../middlewares/auth.middlewares.js"
 import {
+  addCourseToUser,
   deleteUser,
   getUserById,
   getUserProfile,
@@ -22,5 +23,6 @@ router
   .get(protect, admin, getUserById)
   .delete(protect, admin, deleteUser)
   .patch(protect, admin, updateUser)
+  .put(protect, admin, addCourseToUser)
 
 export default router

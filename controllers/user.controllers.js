@@ -64,4 +64,82 @@ const getUserById = asyncHandler(async (req, res) => {
   }
 })
 
-export { getUserProfile, updateUserProfile, getUsers, getUserById }
+const deleteUser = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id)
+
+  if (user) {
+    await user.deleteOne()
+    res.json({
+      message: "User Removed Successfully",
+      code: 200,
+      success: true,
+    })
+  } else {
+    res.status(404)
+    throw new Error("User not found")
+  }
+})
+
+const updateUser = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id)
+
+  if (user) {
+    user.firstName = req.body.firstName || user.firstName
+    user.lastName = req.body.lastName || user.lastName
+    user.email = req.body.email || user.email
+    user.username = req.body.username || user.username
+    user.isAdmin = req.body.isAdmin || user.isAdmin
+    user.role = req.body.role || user.role
+
+    await user.save()
+
+    res.json({
+      message: "User Profile Updated successfully",
+      code: 200,
+      success: true,
+    })
+  } else {
+    res.status(404)
+    throw new Error("User not found")
+  }
+})
+
+const addCourseToUser = asyncHandler(async (req, res) => {
+  const { courseId, userId } = req.body
+  const user = await User.findById(userId)
+  const course = await Course.findById(courseId)
+
+  if (!user) {
+    res.status(404)
+    throw new Error("User Not Found")
+  }
+  if (!course) {
+    res.status(404)
+    throw new Error("Course Not Found")
+  }
+
+  if (user.courses.includes(courseId)) {
+    res.status(404)
+    throw new Error("Course already added to user")
+  }
+
+  await User.updateOne(
+    { $push: { courses: courseId } },
+    { new: true }
+  ).populate("courses")
+
+  res.status(201).json({
+    message: "Course added successfully",
+    code: 201,
+    success: true,
+  })
+})
+
+export {
+  getUserProfile,
+  updateUserProfile,
+  getUsers,
+  getUserById,
+  deleteUser,
+  updateUser,
+}

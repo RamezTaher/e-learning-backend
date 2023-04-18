@@ -20,7 +20,7 @@ const login = asyncHandler(async (req, res) => {
 const register = asyncHandler(async (req, res) => {
   const { firstName, lastName, email, username, password } = req.body
 
-  const userExists = await User.findOne({ email, username })
+  const userExists = await User.findOne({ $or: [{ email }, { username }] })
 
   if (userExists) {
     res.status(400)

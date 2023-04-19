@@ -20,7 +20,7 @@ router
 router
   .route("/:id")
   .get(protect, getModuleById)
-  .put(protect, admin, updateModuleName)
+  .patch(protect, admin, updateModuleName)
   .delete(protect, admin, deleteModule)
 
 router

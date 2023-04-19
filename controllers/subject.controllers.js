@@ -31,8 +31,8 @@ const updateSubject = asyncHandler(async (req, res) => {
   const subject = await Subject.findById(req.params.id)
 
   if (subject) {
-    subject.name = req.body.name
-    subject.description = req.body.description
+    subject.name = req.body.name || subject.name
+    subject.description = req.body.description || subject.description
 
     await subject.save()
     res.status(200).json({

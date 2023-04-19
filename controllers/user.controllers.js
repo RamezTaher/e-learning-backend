@@ -3,7 +3,14 @@ import User from "../models/user.models.js"
 import Course from "../models/course.models.js"
 
 const getUserProfile = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user._id).populate("courses")
+  const user = await User.findById(req.user._id).populate({
+    path: "courses",
+    populate: [
+      { path: "instructor", select: "firstName lastName username" },
+      { path: "students", select: "firstName lastName username" },
+      { path: "modules" },
+    ],
+  })
 
   if (user) {
     res.json({
@@ -54,7 +61,14 @@ const getUsers = asyncHandler(async (req, res) => {
 const getUserById = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id)
     .select("-password")
-    .populate("courses")
+    .populate({
+      path: "courses",
+      populate: [
+        { path: "instructor", select: "firstName lastName username" },
+        { path: "students", select: "firstName lastName username" },
+        { path: "modules" },
+      ],
+    })
 
   if (user) {
     res.json(user)

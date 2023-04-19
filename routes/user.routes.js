@@ -3,6 +3,7 @@ import { protect, admin } from "../middlewares/auth.middlewares.js"
 import {
   addCourseToUser,
   deleteUser,
+  enrollToCourse,
   getUserById,
   getUserProfile,
   getUsers,
@@ -27,7 +28,9 @@ router
 
 router
   .route("/:id/course")
-  .put(protect, admin, addCourseToUser)
   .delete(protect, admin, removeCourseFromUser)
+  .put(protect, admin, addCourseToUser)
+
+router.route("/enroll").put(protect, enrollToCourse)
 
 export default router

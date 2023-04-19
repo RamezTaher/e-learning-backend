@@ -27,6 +27,6 @@ router
   .route("/:moduleId/lesson/:lessonId")
   .delete(protect, admin, deleteModuleLesson)
 
-router.route("/:moduleId/lesson").put(protect, admin, addModuleLesson)
+router.route("/:moduleId/lesson").post(protect, admin, addModuleLesson)
 
 export default router

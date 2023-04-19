@@ -38,12 +38,6 @@ const userSchema = mongoose.Schema(
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Course",
-        progress: {
-          type: Number,
-          min: 0,
-          max: 0,
-          default: 0,
-        },
       },
     ],
     role: {

@@ -123,9 +123,7 @@ const addCourseToUser = asyncHandler(async (req, res) => {
     throw new Error("Course already added to user")
   }
 
-  await User.updateOne({
-    $push: { courses: { _id: courseId, progress: 0 } },
-  })
+  await User.updateOne({ _id: req.params.id }, { $push: { courses: courseId } })
 
   res.status(201).json({
     message: "Course added successfully",
@@ -136,6 +134,7 @@ const addCourseToUser = asyncHandler(async (req, res) => {
 
 const removeCourseFromUser = asyncHandler(async (req, res) => {
   const { courseId } = req.body
+
   const user = await User.findById(req.params.id)
   const course = await Course.findById(courseId)
 
@@ -162,6 +161,35 @@ const removeCourseFromUser = asyncHandler(async (req, res) => {
   })
 })
 
+const enrollToCourse = asyncHandler(async (req, res) => {
+  const { courseId } = req.body
+
+  const user = await User.findById(req.user._id)
+  const course = await Course.findById(courseId)
+
+  if (!user) {
+    res.status(404)
+    throw new Error("User not found")
+  }
+
+  if (!course) {
+    res.status(404)
+    throw new Error("Course not found")
+  }
+
+  if (user.courses.includes(courseId)) {
+    res.status(400)
+    throw new Error("User already enrolled to this course")
+  }
+
+  await User.updateOne({ _id: req.user._id }, { $push: { courses: courseId } })
+  res.status(200).json({
+    message: "Enrolled to course successfully",
+    code: 200,
+    success: true,
+  })
+})
+
 export {
   getUserProfile,
   updateUserProfile,
@@ -171,4 +199,5 @@ export {
   updateUser,
   addCourseToUser,
   removeCourseFromUser,
+  enrollToCourse,
 }

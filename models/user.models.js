@@ -34,6 +34,11 @@ const userSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    profileImage: {
+      type: String,
+      default:
+        "https://campussafetyconference.com/wp-content/uploads/2020/08/iStock-476085198.jpg",
+    },
     courses: [
       {
         type: mongoose.Schema.Types.ObjectId,

@@ -10,10 +10,7 @@ import {
 } from "../controllers/course.controllers.js"
 const router = express.Router()
 
-router
-  .route("/")
-  .post(protect, admin, createCourse)
-  .get(protect, admin, getCourses)
+router.route("/").post(protect, admin, createCourse).get(protect, getCourses)
 
 router
   .route("/:id")

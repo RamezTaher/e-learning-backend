@@ -13,13 +13,16 @@ const createCourse = asyncHandler(async (req, res) => {
 })
 
 const getCourses = asyncHandler(async (req, res) => {
-  const courses = await Course.find()
+  const courses = await Course.find().populate(
+    "instructor",
+    "profileImage firstName lastName"
+  )
   res.json(courses)
 })
 
 const getCourseById = asyncHandler(async (req, res) => {
   const course = await Course.findById(req.params.id)
-    .populate("instructor", "firstName lastName username")
+    .populate("instructor", "firstName lastName username profileImage")
     .populate("students", "firstName lastName username")
     .populate("modules")
     .populate("subject")

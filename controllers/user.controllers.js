@@ -21,6 +21,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
       username: user.username,
       role: user.role,
       courses: user.courses,
+      profileImage: user.profileImage,
     })
   } else {
     res.status(404)
@@ -55,6 +56,13 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 
 const getUsers = asyncHandler(async (req, res) => {
   const users = await User.find().select("-password")
+  res.json(users)
+})
+
+const getTopStudents = asyncHandler(async (req, res) => {
+  const users = await User.find({ role: "student" })
+    .select("-password")
+    .limit(6)
   res.json(users)
 })
 
@@ -214,4 +222,5 @@ export {
   addCourseToUser,
   removeCourseFromUser,
   enrollToCourse,
+  getTopStudents,
 }

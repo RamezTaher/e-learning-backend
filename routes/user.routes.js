@@ -4,6 +4,8 @@ import {
   addCourseToUser,
   deleteUser,
   enrollToCourse,
+  getAllInstructors,
+  getAllStudents,
   getTopStudents,
   getUserById,
   getUserProfile,
@@ -22,6 +24,8 @@ router
 router.route("/").get(protect, admin, getUsers)
 
 router.route("/top").get(protect, getTopStudents)
+router.route("/students").get(protect, admin, getAllStudents)
+router.route("/instructors").get(protect, admin, getAllInstructors)
 
 router
   .route("/:id")

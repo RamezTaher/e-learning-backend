@@ -66,6 +66,16 @@ const getTopStudents = asyncHandler(async (req, res) => {
   res.json(users)
 })
 
+const getAllStudents = asyncHandler(async (req, res) => {
+  const users = await User.find({ role: "student" }).select("-password")
+  res.json(users)
+})
+
+const getAllInstructors = asyncHandler(async (req, res) => {
+  const users = await User.find({ role: "instructor" }).select("-password")
+  res.json(users)
+})
+
 const getUserById = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id)
     .select("-password")
@@ -223,4 +233,6 @@ export {
   removeCourseFromUser,
   enrollToCourse,
   getTopStudents,
+  getAllStudents,
+  getAllInstructors,
 }

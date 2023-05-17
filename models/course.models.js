@@ -33,9 +33,10 @@ const courseSchema = mongoose.Schema(
     ],
     level: {
       type: String,
-      enum: ["Beginner", "Intermediate", "Advanced"],
+      enum: ["beginner", "intermediate", "advanced"],
       default: "intermediate",
       required: true,
+      lowercase: true,
     },
     subject: {
       type: mongoose.Schema.Types.ObjectId,

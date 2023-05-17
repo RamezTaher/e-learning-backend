@@ -13,17 +13,16 @@ const createCourse = asyncHandler(async (req, res) => {
 })
 
 const getCourses = asyncHandler(async (req, res) => {
-  const courses = await Course.find().populate(
-    "instructor",
-    "profileImage firstName lastName"
-  )
+  const courses = await Course.find()
+    .populate("instructor", "profileImage firstName lastName")
+    .sort({ order: 1 })
   res.json(courses)
 })
 
 const getCourseById = asyncHandler(async (req, res) => {
   const course = await Course.findById(req.params.id)
     .populate("instructor", "firstName lastName username profileImage")
-    .populate("students", "firstName lastName username")
+    .populate("students", "firstName lastName username profileImage")
     .populate("modules")
     .populate("subject")
 
@@ -44,6 +43,7 @@ const updateCourse = asyncHandler(async (req, res) => {
     course.image = req.body.image || course.image
     course.level = req.body.level || course.level
     course.startDate = req.body.startDate || course.startDate
+    course.duration = req.body.duration || course.duration
 
     await course.save()
     res.status(200).json({

@@ -5,6 +5,7 @@ const createSubject = asyncHandler(async (req, res) => {
   const subject = new Subject({
     name: req.body.name,
     description: req.body.description,
+    image: req.body.image,
   })
 
   const createdSubject = await subject.save()
@@ -33,6 +34,7 @@ const updateSubject = asyncHandler(async (req, res) => {
   if (subject) {
     subject.name = req.body.name || subject.name
     subject.description = req.body.description || subject.description
+    subject.image = req.body.image || subject.image
 
     await subject.save()
     res.status(200).json({

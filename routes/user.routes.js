@@ -35,7 +35,7 @@ router
 
 router
   .route("/:id/course")
-  .delete(protect, admin, removeCourseFromUser)
+  .patch(protect, admin, removeCourseFromUser)
   .put(protect, admin, addCourseToUser)
 
 router.route("/enroll").put(protect, enrollToCourse)

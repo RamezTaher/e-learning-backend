@@ -2,10 +2,11 @@ import asyncHandler from "express-async-handler"
 import Module from "../models/module.models.js"
 
 const createModule = asyncHandler(async (req, res) => {
-  const { title } = req.body
+  const { title, lessons } = req.body
 
   const module = new Module({
     title,
+    lessons,
   })
 
   const createdModule = await module.save()

@@ -21,7 +21,6 @@ const moduleSchema = mongoose.Schema(
           order: { type: Number, required: true },
         },
       ],
-      required: true,
     },
   },
 

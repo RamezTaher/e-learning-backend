@@ -1,5 +1,6 @@
 import asyncHandler from "express-async-handler"
 import Course from "../models/course.models.js"
+import Module from "../models/module.models.js"
 
 const createCourse = asyncHandler(async (req, res) => {
   const course = await Course.create(req.body)
@@ -73,4 +74,56 @@ const deleteCourse = asyncHandler(async (req, res) => {
   }
 })
 
-export { createCourse, getCourses, getCourseById, updateCourse, deleteCourse }
+const addModuleToCourse = asyncHandler(async (req, res) => {
+  const course = await Course.findById(req.params.courseId)
+
+  if (course) {
+    const module = new Module({
+      title: req.body.title,
+      lessons: req.body.lessons,
+    })
+
+    const createdModule = await module.save()
+    course.modules.push(createdModule)
+    await course.save()
+
+    res.status(201).json({
+      message: "Module added successfully",
+      code: 201,
+      success: true,
+    })
+  } else {
+    res.status(404)
+    throw new Error("Course not found")
+  }
+})
+
+const removeModuleFromCourse = asyncHandler(async (req, res) => {
+  const course = await Course.findById(req.params.courseId)
+
+  if (course) {
+    course.modules = course.modules.filter(
+      (module) => module._id != req.params.moduleId
+    )
+
+    await course.save()
+    res.json({
+      message: "Module removed successfully",
+      code: 200,
+      success: true,
+    })
+  } else {
+    res.status(404)
+    throw new Error("Course not found")
+  }
+})
+
+export {
+  createCourse,
+  getCourses,
+  getCourseById,
+  updateCourse,
+  deleteCourse,
+  addModuleToCourse,
+  removeModuleFromCourse,
+}

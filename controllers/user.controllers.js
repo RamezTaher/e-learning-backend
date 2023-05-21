@@ -6,7 +6,10 @@ const getUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id).populate({
     path: "courses",
     populate: [
-      { path: "instructor", select: "firstName lastName username" },
+      {
+        path: "instructor",
+        select: "firstName lastName username profileImage",
+      },
       { path: "students", select: "firstName lastName username" },
       { path: "modules" },
     ],

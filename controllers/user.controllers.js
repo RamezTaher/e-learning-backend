@@ -37,6 +37,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     user.lastName = req.body.lastName || user.lastName
     user.email = req.body.email || user.email
     user.username = req.body.username || user.username
+    user.profileImage = req.body.profileImage || user.profileImage
     if (req.body.password) {
       user.password = req.body.password
     }
@@ -122,6 +123,7 @@ const updateUser = asyncHandler(async (req, res) => {
     user.username = req.body.username || user.username
     user.isAdmin = req.body.isAdmin || user.isAdmin
     user.role = req.body.role || user.role
+    user.profileImage = req.body.profileImage || user.profileImage
 
     await user.save()
 

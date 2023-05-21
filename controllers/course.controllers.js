@@ -1,6 +1,7 @@
 import asyncHandler from "express-async-handler"
 import Course from "../models/course.models.js"
 import Module from "../models/module.models.js"
+import Response from "../models/response.model.js"
 
 const createCourse = asyncHandler(async (req, res) => {
   const course = await Course.create(req.body)
@@ -26,6 +27,7 @@ const getCourseById = asyncHandler(async (req, res) => {
     .populate("students", "firstName lastName username profileImage")
     .populate("modules")
     .populate("subject")
+    .populate("responses")
 
   if (course) {
     res.json(course)
@@ -97,6 +99,47 @@ const addModuleToCourse = asyncHandler(async (req, res) => {
     throw new Error("Course not found")
   }
 })
+const addResponseToCourse = asyncHandler(async (req, res) => {
+  const course = await Course.findById(req.params.courseId)
+
+  if (course) {
+    const response = new Response({
+      link: req.body.link,
+      student: req.body.student,
+    })
+
+    const createdResponse = await response.save()
+    course.responses.push(createdResponse)
+    await course.save()
+
+    res.status(201).json({
+      message: "Response added successfully",
+      code: 201,
+      success: true,
+    })
+  } else {
+    res.status(404)
+    throw new Error("Course not found")
+  }
+})
+const addTestToCourse = asyncHandler(async (req, res) => {
+  const course = await Course.findById(req.params.courseId)
+
+  if (course) {
+    course.test = req.body.test
+    console.log(req.body.test)
+
+    await course.save()
+    res.status(200).json({
+      message: "Test Added Successfully",
+      code: 200,
+      success: true,
+    })
+  } else {
+    res.status(404)
+    throw new Error("Course not found")
+  }
+})
 
 const removeModuleFromCourse = asyncHandler(async (req, res) => {
   const course = await Course.findById(req.params.courseId)
@@ -126,4 +169,6 @@ export {
   deleteCourse,
   addModuleToCourse,
   removeModuleFromCourse,
+  addTestToCourse,
+  addResponseToCourse,
 }

@@ -31,7 +31,7 @@ router
   .route("/:id")
   .get(protect, admin, getUserById)
   .delete(protect, admin, deleteUser)
-  .patch(protect, admin, updateUser)
+  .patch(protect, updateUser)
 
 router
   .route("/:id/course")

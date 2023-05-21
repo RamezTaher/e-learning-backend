@@ -31,6 +31,15 @@ const courseSchema = mongoose.Schema(
         ref: "Module",
       },
     ],
+    responses: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Response",
+      },
+    ],
+    test: {
+      type: String,
+    },
     level: {
       type: String,
       enum: ["beginner", "intermediate", "advanced"],

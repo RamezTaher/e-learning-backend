@@ -31,6 +31,13 @@ const courseSchema = mongoose.Schema(
         ref: "Module",
       },
     ],
+
+    quiz: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Quiz",
+      },
+    ],
     responses: [
       {
         type: mongoose.Schema.Types.ObjectId,

@@ -5,12 +5,10 @@ const questionSchema = new Schema({
   question: { type: String, required: true },
   answers: [{ type: String, required: true }],
   correctAnswer: { type: Number, required: true },
-  quiz: { type: Schema.Types.ObjectId, ref: "Quiz" },
 })
 
 const quizSchema = new Schema({
   questions: [{ type: Schema.Types.ObjectId, ref: "Question" }],
-  createdAt: { type: Date, default: Date.now },
 })
 
 const Question = mongoose.model("Question", questionSchema)

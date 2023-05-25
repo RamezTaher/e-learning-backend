@@ -3,6 +3,7 @@ import { protect, admin } from "../middlewares/auth.middlewares.js"
 
 import {
   addModuleToCourse,
+  addQuizToCourse,
   addResponseToCourse,
   addTestToCourse,
   createCourse,
@@ -28,5 +29,6 @@ router
   .patch(protect, admin, removeModuleFromCourse)
 
 router.route("/test/:courseId").put(protect, admin, addTestToCourse)
+router.route("/quiz/:courseId").put(protect, admin, addQuizToCourse)
 router.route("/submit/:courseId").put(protect, addResponseToCourse)
 export default router

@@ -162,6 +162,11 @@ const addCourseToUser = asyncHandler(async (req, res) => {
 
   await User.updateOne({ _id: req.params.id }, { $push: { courses: courseId } })
 
+  await Course.updateOne(
+    { _id: courseId },
+    { $push: { students: req.params.id } }
+  )
+
   res.status(201).json({
     message: "Course added successfully",
     code: 201,

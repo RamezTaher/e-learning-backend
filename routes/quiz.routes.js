@@ -15,7 +15,7 @@ router.route("/:id").get(protect, getQuizById)
 
 router
   .route("/:quizId/question/:questionId")
-  .patch(protect, admin, removeQuestionFromQuiz)
+  .delete(protect, admin, removeQuestionFromQuiz)
 
 router.route("/:quizId/question").patch(protect, admin, addQuestionToQuiz)
 

@@ -29,11 +29,13 @@ const removeQuestionFromQuiz = asyncHandler(async (req, res) => {
 const addQuestionToQuiz = asyncHandler(async (req, res) => {
   const { question, answers, correctAnswer } = req.body
   const quiz = await Quiz.findById(req.params.quizId)
+  console.log(quiz)
 
   if (quiz) {
     const newQuestion = new Question({ question, answers, correctAnswer })
     const createdQuestion = await newQuestion.save()
-    await Quiz.updateOne({ $push: { questions: createdQuestion._id } })
+    quiz.questions.push(createdQuestion._id)
+    await quiz.save()
 
     res.status(201).json({
       message: "Question  added successfully",
@@ -42,7 +44,7 @@ const addQuestionToQuiz = asyncHandler(async (req, res) => {
     })
   } else {
     res.status(404)
-    throw new Error("Module not found")
+    throw new Error("Quizz not found")
   }
 })
 

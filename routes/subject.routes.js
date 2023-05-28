@@ -10,12 +10,12 @@ import { admin, protect } from "../middlewares/auth.middlewares.js"
 
 const router = express.Router()
 
-router.route("/").post(protect, admin, createSubject).get(protect, getSubjects)
+router.route("/").post(protect, createSubject).get(protect, getSubjects)
 
 router
   .route("/:id")
   .get(protect, getSubjectById)
-  .delete(protect, admin, deleteSubject)
-  .put(protect, admin, updateSubject)
+  .delete(protect, deleteSubject)
+  .put(protect, updateSubject)
 
 export default router

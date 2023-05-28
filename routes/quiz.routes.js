@@ -9,14 +9,14 @@ import {
 
 const router = express.Router()
 
-router.route("/").get(protect, admin, getQuizs)
+router.route("/").get(protect, getQuizs)
 
 router.route("/:id").get(protect, getQuizById)
 
 router
   .route("/:quizId/question/:questionId")
-  .delete(protect, admin, removeQuestionFromQuiz)
+  .delete(protect, removeQuestionFromQuiz)
 
-router.route("/:quizId/question").patch(protect, admin, addQuestionToQuiz)
+router.route("/:quizId/question").patch(protect, addQuestionToQuiz)
 
 export default router

@@ -21,22 +21,22 @@ router
   .get(protect, getUserProfile)
   .patch(protect, updateUserProfile)
 
-router.route("/").get(protect, admin, getUsers)
+router.route("/").get(protect, getUsers)
 
 router.route("/top").get(protect, getTopStudents)
-router.route("/students").get(protect, admin, getAllStudents)
-router.route("/instructors").get(protect, admin, getAllInstructors)
+router.route("/students").get(protect, getAllStudents)
+router.route("/instructors").get(protect, getAllInstructors)
 
 router
   .route("/:id")
-  .get(protect, admin, getUserById)
-  .delete(protect, admin, deleteUser)
+  .get(protect, getUserById)
+  .delete(protect, deleteUser)
   .patch(protect, updateUser)
 
 router
   .route("/:id/course")
-  .patch(protect, admin, removeCourseFromUser)
-  .put(protect, admin, addCourseToUser)
+  .patch(protect, removeCourseFromUser)
+  .put(protect, addCourseToUser)
 
 router.route("/enroll").put(protect, enrollToCourse)
 

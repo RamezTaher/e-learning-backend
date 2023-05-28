@@ -1,5 +1,5 @@
 import express from "express"
-import { protect, admin } from "../middlewares/auth.middlewares.js"
+import { protect } from "../middlewares/auth.middlewares.js"
 
 import {
   addModuleToCourse,
@@ -15,20 +15,18 @@ import {
 } from "../controllers/course.controllers.js"
 const router = express.Router()
 
-router.route("/").post(protect, admin, createCourse).get(protect, getCourses)
+router.route("/").post(protect, createCourse).get(protect, getCourses)
 
 router
   .route("/:id")
   .get(protect, getCourseById)
-  .delete(protect, admin, deleteCourse)
-  .put(protect, admin, updateCourse)
+  .delete(protect, deleteCourse)
+  .put(protect, updateCourse)
 
-router.route("/:courseId").patch(protect, admin, addModuleToCourse)
-router
-  .route("/:courseId/:moduleId")
-  .patch(protect, admin, removeModuleFromCourse)
+router.route("/:courseId").patch(protect, addModuleToCourse)
+router.route("/:courseId/:moduleId").patch(protect, removeModuleFromCourse)
 
-router.route("/test/:courseId").put(protect, admin, addTestToCourse)
-router.route("/quiz/:courseId").put(protect, admin, addQuizToCourse)
+router.route("/test/:courseId").put(protect, addTestToCourse)
+router.route("/quiz/:courseId").put(protect, addQuizToCourse)
 router.route("/submit/:courseId").put(protect, addResponseToCourse)
 export default router

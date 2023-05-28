@@ -12,21 +12,16 @@ import {
 
 const router = express.Router()
 
-router
-  .route("/")
-  .get(protect, admin, getModules)
-  .post(protect, admin, createModule)
+router.route("/").get(protect, getModules).post(protect, createModule)
 
 router
   .route("/:id")
   .get(protect, getModuleById)
-  .patch(protect, admin, updateModuleName)
-  .delete(protect, admin, deleteModule)
+  .patch(protect, updateModuleName)
+  .delete(protect, deleteModule)
 
-router
-  .route("/:moduleId/lesson/:lessonId")
-  .delete(protect, admin, deleteModuleLesson)
+router.route("/:moduleId/lesson/:lessonId").delete(protect, deleteModuleLesson)
 
-router.route("/:moduleId/lesson").post(protect, admin, addModuleLesson)
+router.route("/:moduleId/lesson").post(protect, addModuleLesson)
 
 export default router

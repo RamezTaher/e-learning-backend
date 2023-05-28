@@ -97,7 +97,9 @@ const addModuleLesson = asyncHandler(async (req, res) => {
       duration,
       order,
     }
-    await Module.updateOne({ $push: { lessons: newLesson } })
+
+    module.lessons.push(newLesson)
+    await module.save()
 
     res.status(201).json({
       message: "Lesson added successfully",
